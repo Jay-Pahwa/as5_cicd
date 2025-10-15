@@ -27,7 +27,7 @@ class BasicTests(unittest.TestCase):
     def test_main_page(self):
         response = self.app.get('/', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'My Automated To-Do List!', response.data)
+       self.assertIn(b'My Finale Automated To-Do List', response.data)
 
     # Test 2: Ensure a task can be added
     def test_add_task(self):
