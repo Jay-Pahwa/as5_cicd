@@ -9,12 +9,19 @@ class BasicTests(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:' # Use an in-memory database for tests
         self.app = app.test_client()
+
+        # Push an application context to allow db operations
+        self.app_context = app.app_context()
+        self.app_context.push()
+
         db.create_all()
 
     # Teardown is run after each test
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        # Pop the application context
+        self.app_context.pop()
 
     # Test 1: Ensure the main page loads correctly
     def test_main_page(self):
